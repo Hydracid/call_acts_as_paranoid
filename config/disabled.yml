@@ -1,0 +1,4 @@
+# These are all the cops that are disabled in the default configuration.
+
+ParanoiaSupport/CallActsAsParanoid:
+  Enabled: false

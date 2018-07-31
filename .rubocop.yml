@@ -1,0 +1,10 @@
+require:
+  - rubocop/cop/internal_affairs
+  - rubocop-rspec
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/paranoia_support/**/**.rb

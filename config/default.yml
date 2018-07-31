@@ -1,0 +1,3 @@
+ParanoiaSupport/CallActsAsParanoid:
+  Superclass:
+    - ApplicationRecord
