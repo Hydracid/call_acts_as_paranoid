@@ -1,9 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'paranoia_support/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'paranoia_support'
-  spec.version       = '0.0.1'
+  spec.version       = ParanoiaSupport::Version::STRING
   spec.authors       = ['Daisuke Okada']
   spec.email         = ['d-okada@timedia.co.jp']
 
