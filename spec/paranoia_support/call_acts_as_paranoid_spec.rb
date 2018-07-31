@@ -37,7 +37,7 @@ RSpec.describe ParanoiaSupport::CallActsAsParanoid do
       RUBY
     end
 
-    context 'without options' do
+    context 'with basic options' do
       let(:config) do
         RuboCop::Config
           .new(
@@ -61,7 +61,7 @@ RSpec.describe ParanoiaSupport::CallActsAsParanoid do
       end
     end
 
-    context 'with options' do
+    context 'with MethodArgumentsString option' do
       let(:config) do
         RuboCop::Config
           .new(
@@ -74,6 +74,38 @@ RSpec.describe ParanoiaSupport::CallActsAsParanoid do
       let(:expected) do
         <<-RUBY.strip_indent
           #  deleted_at :datetime
+          class Foo < ApplicationRecord
+            acts_as_paranoid column: :supended_at
+          end
+        RUBY
+      end
+
+      it 'corrected' do
+        corrected = autocorrect_source(source)
+        expect(corrected).to eq expected
+      end
+    end
+
+    context 'with complex options' do
+      let(:config) do
+        RuboCop::Config
+          .new(
+            'ParanoiaSupport/CallActsAsParanoid' => {
+              'Superclass' => [{ 'Class' => 'ApplicationRecord', 'Column' => 'supended_at' }],
+              'MethodArgumentsString' => 'column: :supended_at'
+            }
+          )
+      end
+      let(:source) do
+        <<-RUBY.strip_indent
+          #  supended_at :datetime
+          class Foo < ApplicationRecord
+          end
+        RUBY
+      end
+      let(:expected) do
+        <<-RUBY.strip_indent
+          #  supended_at :datetime
           class Foo < ApplicationRecord
             acts_as_paranoid column: :supended_at
           end
