@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'paranoia_support/call_acts_as_paranoid'
 
 RSpec.describe ParanoiaSupport::CallActsAsParanoid do
   subject(:cop) do

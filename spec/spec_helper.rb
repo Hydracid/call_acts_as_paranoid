@@ -11,6 +11,8 @@ require 'pry'
 # Require supporting files exposed for testing.
 require 'rubocop/rspec/support'
 
+require 'paranoia_support'
+
 RSpec.configure do |config|
   unless defined?(::TestQueue)
     # See. https://github.com/tmm1/test-queue/issues/60#issuecomment-281948929
