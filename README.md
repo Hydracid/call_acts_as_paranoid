@@ -6,9 +6,15 @@ find a column (e.g. `:deleted_at`) from annotation comment, and write `acts_as_p
 
 `gem 'rubocop'`
 
+https://github.com/rubocop-hq/rubocop
+
 `gem 'annotate'`
 
+https://github.com/ctran/annotate_models
+
 `gem 'paranoia'`
+
+https://github.com/rubysherpas/paranoia
 
 ## Installation
 
