@@ -18,7 +18,13 @@ module ParanoiaSupport
   #     acts_as_paranoid
   #   end
   class CallActsAsParanoid < RuboCop::Cop::Cop
-    include RuboCop::Cop::Alignment
+    # https://github.com/rubocop-hq/rubocop/commit/816568658b25275e427ff953aae7a7cd84489b8e#diff-791417dd66c35e3240d7cec5c5cb4700
+    if defined?(RuboCop::Cop::Alignment)
+      include RuboCop::Cop::Alignment
+    else
+      include RuboCop::Cop::AutocorrectAlignment
+    end
+
     MSG = 'call `acts_as_paranoid`.'.freeze
     DEFAULT_COLUMN = 'deleted_at'.freeze
 
@@ -26,6 +32,12 @@ module ParanoiaSupport
       (class (const _ _) (const _ _) ...)
     PATTERN
     def_node_search :acts_as_paranoid_found?, '(send nil? :acts_as_paranoid ...)'
+
+    # https://github.com/rubocop-hq/rubocop/commit/a1893ba57b43d793c15bd66f6db47950ae2ef7bc#diff-bb699bbdd39f9057a30af6f90468ef1d
+    def add_offense(node)
+      return super(node, :expression) if Gem::Version.new(RuboCop::Version::STRING) < Gem::Version.new('0.52')
+      super node
+    end
 
     def on_class(node)
       class_definition(node) do
@@ -65,7 +77,7 @@ module ParanoiaSupport
     def detect_annotated_column?(const_name)
       regexp = /^#\s+#{Regexp.escape(column(const_name))}\s+\:datetime/
       @processed_source.comments.each do |comment|
-        return true if comment.text.match?(regexp)
+        return true if regexp.match comment.text
       end
       false
     end
