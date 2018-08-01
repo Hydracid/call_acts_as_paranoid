@@ -17,12 +17,12 @@ module ParanoiaSupport
   #   class Foo < ApplicationRecord
   #     acts_as_paranoid
   #   end
-  class CallActsAsParanoid < RuboCop::Cop::Cop
+  class CallActsAsParanoid < ::RuboCop::Cop::Cop
     # https://github.com/rubocop-hq/rubocop/commit/816568658b25275e427ff953aae7a7cd84489b8e#diff-791417dd66c35e3240d7cec5c5cb4700
-    if defined?(RuboCop::Cop::Alignment)
-      include RuboCop::Cop::Alignment
+    if defined?(::RuboCop::Cop::Alignment)
+      include ::RuboCop::Cop::Alignment
     else
-      include RuboCop::Cop::AutocorrectAlignment
+      include ::RuboCop::Cop::AutocorrectAlignment
     end
 
     MSG = 'call `acts_as_paranoid`.'.freeze
@@ -42,7 +42,7 @@ module ParanoiaSupport
     def on_class(node)
       class_definition(node) do
         _, superklazz, = *node
-        next unless superklazz.is_a?(RuboCop::AST::Node)
+        next unless superklazz.is_a?(::RuboCop::AST::Node)
         add_offense(node) if corrective_class?(superklazz.const_name, node)
       end
     end
