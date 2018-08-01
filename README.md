@@ -23,6 +23,8 @@ https://github.com/rubysherpas/paranoia
 ### .rubocop.yml example
 
 ```
+require: 'paranoia_support/call_acts_as_paranoid'
+
 ParanoiaSupport/CallActsAsParanoid:
   Superclass:
     - ApplicationRecord
